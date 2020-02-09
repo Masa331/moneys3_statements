@@ -1,8 +1,6 @@
 # Moneys3Statements
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/moneys3_statements`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+Generates XML with bank movements for importing into Money S3.
 
 ## Installation
 
@@ -22,18 +20,42 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Instantiate `MoneyS3Statements` with hash containing statements config:
+```
+config = {
+  my_bank_account_id: 'BAN', # Czech: zkratka bankovniho uctu
+  credit_transactions_rule: 'BP001', # Czech: predkontace pro prijmy
+  debit_transactions_rule: 'BV001', # Czech: predkontace pro vydaje
+  credit_transactions_vat_rule: '19Ř00U', # Czech: cleneni dph pro prijmy
+  debit_transactions_vat_rule: '19Ř00P', # Czech: cleneni dph pro vydaje
+  credit_transactions_series: 'BPrr', # Czech: ciselna rada prijmovych bankovnich dokladu
+  debit_transactions_series: 'BVrr' # Czech: ciselna rada vydajovych bankovnich dokladu
+}
+generator = MoneyS3Statements.new(config)
+```
 
-## Development
+Then call `#to_xml` on the generator and pass it an array containing hashes with movement data:
+```
+transactions = [
+  { :date => #<Date: 2019-12-05 ((2458823j,0s,0n),+0s,2299161j)>,
+    :transaction_id => "121205SI201442",
+    :amount => 8500.0,
+    :statement_id => "012/00001",
+    :variable_symbol => "0000112019",
+    :specific_symbol => "",
+    :constant_symbol => "0000000138",
+    :counterparty_account => "1023706843",
+    :counterparty_bank_code => "0100",
+    :type => :debit, # or :credit for credit transactions
+    :description => "Some description.." },
+    ...,
+    ...
+]
+statements_string = generator.to_xml(transactions)
+File.open("statements.xml", 'wb') { |f| f.write statements_string }
+```
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
-
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
-
-## Contributing
-
-Bug reports and pull requests are welcome on GitHub at https://github.com/[USERNAME]/moneys3_statements.
-
+Then import into Money.
 
 ## License
 
