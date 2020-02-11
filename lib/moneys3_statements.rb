@@ -30,7 +30,7 @@ class MoneyS3Statements
         celkem: amount,
         ucet: { zkrat: @my_bank_account_id },
         popis: item[:description],
-        pozn: item[:description],
+        pozn: item[:note],
         var_sym: item[:variable_symbol],
         spec_sym: item[:specific_symbol],
         kon_sym: item[:constant_symbol],

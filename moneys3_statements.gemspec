@@ -1,6 +1,6 @@
 Gem::Specification.new do |spec|
   spec.name          = "moneys3_statements"
-  spec.version       = '0.0.1'
+  spec.version       = '0.0.2'
   spec.authors       = ["Premysl Donat"]
   spec.email         = ["pdonat@seznam.cz"]
   spec.summary       = "Library for creating MoneyS3 xml bank statements for import."

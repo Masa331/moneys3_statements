@@ -47,7 +47,8 @@ transactions = [
     :counterparty_account => "1023706843",
     :counterparty_bank_code => "0100",
     :type => :debit, # or :credit for credit transactions
-    :description => "Some description.." },
+    :description => "Some description..",
+    :note => "Some note.." },
     ...,
     ...
 ]
